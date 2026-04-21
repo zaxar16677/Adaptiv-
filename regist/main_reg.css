@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+/*
+  Нормализация блочной модели
+*/
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+    padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure, fieldset):where([class]) {
+    margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl
+):where([class]) {
+    margin-block: 0;
+}
+
+:where(dd[class]) {
+    margin-left: 0;
+}
+
+:where(fieldset[class]) {
+    padding: 0;
+    border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+    list-style: none;
+}
+
+:where(address[class]) {
+    font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+    --paragraphMarginBottom: 24px;
+
+    margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+    margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями и видео
+ */
+img,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+    font: inherit;
+}
+
+
+
+/**
+  Нормализация высоты элемента ссылки при его инспектировании в DevTools
+ */
+a:where([class]) {
+    display: inline-flex;
+}
+
+/**
+  Курсор-рука при наведении на элемент
+ */
+button,
+label {
+    cursor: pointer;
+}
+
+/**
+  Убирает серую подсветку при тапе на мобильных устройствах (iOS/Android)
+ */
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут fill со значением 'none' или начинается с 'url')
+ */
+:where([fill]:not(
+  [fill="none"],
+  [fill^="url"]
+)) {
+    fill: currentColor;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут stroke со значением 'none')
+ */
+:where([stroke]:not(
+  [stroke="none"],
+  [stroke^="url"]
+)) {
+    stroke: currentColor;
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+    transition-property: fill, stroke;
+}
+
+/**
+  Приведение рамок таблиц в классический 'collapse' вид
+ */
+:where(table) {
+    border-collapse: collapse;
+    border-color: currentColor;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+:root{
+    --color-dark: #000000;
+    --color-light: #FFFFFF;
+
+    --container-width: 1400px;
+    --container-padding-x: 15px;
+
+    --transition-duration: 0.2s;
+}
+
+*{
+    font-family: "Urbanist", sans-serif;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+body{
+  margin: 0;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1A1A1A;
+  padding-inline: 9vw;
+  height: 100px;
+  border-bottom: 2px solid #262626;
+  border-right: 2px solid #000000;
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+}
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-menu-list {
+  display: flex;
+  margin: 0;
+}
+.header-menu-link{
+  padding-inline: 24px;
+  padding-block: 14px;
+  text-decoration: none;
+}
+.header-menu-link:hover{
+  background: #141414;
+  border: 1px solid;
+  border-color:#4D4D4D;
+  border-radius:15px ;
+  padding-inline: 24px;
+  padding-block: 14px;
+  transition: 0.3s;
+  box-shadow: 0 0 0 1px #4D4D4D inset;
+    
+}
+
+.header-active-button {
+  background: #703BF7;
+  border: 1px solid;
+  border-color:#4D4D4D;
+  border-radius:15px ;
+  padding-inline: 24px;
+  padding-block: 16px;
+  text-decoration: none;
+}
+
+
+
+.header-info {
+    display: flex;
+    width: 100%;
+    padding-inline: 9vw;
+    padding-block: 10vh ;
+    background: linear-gradient(90deg, #1A191B, #010101);
+}
+
+.header-info-text h1 {
+    font-size: 48px;
+}
+.header-info-text p {
+    font-size: 18px;
+    color: #999;
+}
+
+
+
+.sub-container {
+  background: #141414;
+  font-size: clamp(1rem,3vw,1.125rem);
+  border: 3px solid;
+  border-color: #262626;  
+}
+.sub-container-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+}
+.sub-container-block {
+  display: grid;
+  place-items: center;
+  background: #1A1A1A;
+  border: 1px solid;
+  border-radius: 10px;
+  border-color: #262626 ;
+  width: 25vw;
+  padding-block: 5vh; 
+}
+.sub-container-block img{
+  padding-bottom: 20px;
+}
+.sub-container-a{
+    display: flex;
+    flex-wrap: wrap;
+}
+.sub-container-a a{
+    padding-inline: 10px;
+}
+
+
+
+.sub-info {
+    background: #141414;
+    padding-inline: 9vw;
+    padding-block: 5vh;
+    display: flex;
+    justify-content: space-between;
+}
+.sub-info-text h1 {
+    font-size: 48px;
+}
+.sub-info-text p{
+    font-size: 18px;
+    color: #999;
+}
+
+
+
+.conteiner-form {
+  display: flex;
+  padding-inline: 9vw;
+  background: #141414;
+  box-sizing: border-box;
+  padding-bottom: 30px;
+}
+.form-bloc{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-inline: 100px;
+    padding-block: 100px;
+    border: 1px solid #262626;
+    flex: 1;
+    gap: 20px;
+}
+.form-bloc form{
+    
+}
+.form-bloc label {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+.container-input-standart{
+    width: 20vw;
+    background-color: #141414;
+    border: 1px solid #262626;
+    border-radius: 5px;
+    padding-block: 24px;
+    padding-inline: 20px;
+}
+.container-input-massage label{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+.input-Massege{
+    width: 75vw;
+    height: 170px;
+    background-color: #141414;
+    border: 1px solid #262626;
+    border-radius: 5px;
+    padding-block: 24px;
+    padding-inline: 20px;
+}
+
+
+.container-check-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    column-gap: 10px;
+      
+}
+
+.container-check-box button{
+    background: #703BF7;
+    border: 1px solid;
+    border-color:#4D4D4D;
+    border-radius:15px ;
+    padding-inline: 24px;
+    padding-block: 16px;
+    text-decoration: none;
+}
+
+
+
+
+
+.contact-us-lower {
+  background-color: #141414;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 9vw;
+  border-top: 1px solid #262626;
+  padding-top: 100px;
+}
+.lower-logo-section {
+  padding-bottom: 30px;
+}
+.lower-form-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #262626;
+  padding-block:15px ;
+  max-width: 400px;
+  border-radius: 10px ;
+}
+.lower-form-input input {
+  background-color: #141414;
+  border: 0px;
+  padding-inline: 10px;
+  font-size: 18px;
+}
+.lower-form-input input:active {
+  background-color: #141414;
+}
+.lower-form-input button {
+  background-color: #141414;
+  margin-left: 10px;
+  border: 0px;
+  padding: 0px;
+}
+.lower-form-input img {
+  padding-inline: 24px;
+}
+
+
+
+.lower-info-section{
+  display: flex;
+  column-gap: 100px;
+  font-size: 18px;
+}
+.info-header-block{
+  padding-bottom: 25px;
+}
+.info-header-block a{
+  color: #999999;
+}
+.info-block1{
+  padding-block: 10px;
+}
+.info-block1 a:hover{
+  color: #703BF7;
+}
